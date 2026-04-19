@@ -126,14 +126,28 @@ data "aws_iam_policy_document" "apply_role_policy" {
     ]
   }
   statement {
+    sid = "ConnectCreateDelete"
+    effect = "Allow"
+    actions = [ 
+      "connect:Create*",
+      "connect:Delete*",
+     ]
+     resources = [ "*" ]
+  }
+  statement {
+    sid = "ConnectReadAccess"
+    effect = "Allow"
+    actions = [ 
+      "connect:Describe*",
+      "connect:List*"
+     ]
+     resources = [ "*" ]
+  }
+  statement {
     sid    = "ConnectWriteAccess"
     effect = "Allow"
     actions = [
-      "connect:Describe*",
-      "connect:List*",
-      "connect:Create*",
       "connect:Update*",
-      "connect:Delete*",
       "connect:Associate*",
       "connect:Disassociate*"
     ]

@@ -111,6 +111,21 @@ data "aws_iam_policy_document" "plan_role_policy" {
 
 data "aws_iam_policy_document" "apply_role_policy" {
   statement {
+    sid    = "DirectoryServiceAccess"
+    effect = "Allow"
+    actions = [
+      "ds:AuthorizeApplication",
+      "ds:CheckAlias",
+      "ds:CreateAlias",
+      "ds:CreateDirectory",
+      "ds:CreateIdentityPoolDirectory",
+      "ds:DeleteDirectory",
+      "ds:DescribeDirectories",
+      "ds:UnauthorizeApplication"
+    ]
+    resources = ["*"]
+  }
+  statement {
     sid    = "S3WriteAccess"
     effect = "Allow"
     actions = [
@@ -126,22 +141,22 @@ data "aws_iam_policy_document" "apply_role_policy" {
     ]
   }
   statement {
-    sid = "ConnectCreateDelete"
+    sid    = "ConnectCreateDelete"
     effect = "Allow"
-    actions = [ 
+    actions = [
       "connect:Create*",
       "connect:Delete*",
-     ]
-     resources = [ "*" ]
+    ]
+    resources = ["*"]
   }
   statement {
-    sid = "ConnectReadAccess"
+    sid    = "ConnectReadAccess"
     effect = "Allow"
-    actions = [ 
+    actions = [
       "connect:Describe*",
       "connect:List*"
-     ]
-     resources = [ "*" ]
+    ]
+    resources = ["*"]
   }
   statement {
     sid    = "ConnectWriteAccess"
@@ -175,6 +190,8 @@ data "aws_iam_policy_document" "apply_role_policy" {
       "iam:CreateRole",
       "iam:DeleteRole",
       "iam:UpdateRole",
+      "iam:AttachRolePolicy",
+      "iam:CreateServiceLinkedRole",
       "iam:PutRolePolicy",
       "iam:GetRolePolicy",
       "iam:DeleteRolePolicy",
